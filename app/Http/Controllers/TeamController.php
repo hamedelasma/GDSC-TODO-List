@@ -43,7 +43,7 @@ class TeamController extends Controller
 
     }
 
-    public function delete($team_id)
+    public function destroy($team_id)
     {
         $team = Team::findOrFail($team_id);
         $team->delete();
