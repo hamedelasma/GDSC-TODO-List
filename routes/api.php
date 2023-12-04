@@ -17,4 +17,10 @@ Route::apiResource('user', UserController::class);
 
 Route::apiResource('tasks', TaskController::class);
 
+
 Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::middleware('auth:api')->group(function () {
+    Route::get('profile', [AuthController::class, 'profile'])->name('profile');
+
+});
