@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Team;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -25,6 +25,7 @@ class AuthController extends Controller
 
     public function profile(Request $request)
     {
+
         $user = [
             'name' => auth()->user()->name,
             'phone' => auth()->user()->phone,

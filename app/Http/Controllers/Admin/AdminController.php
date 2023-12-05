@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
+        $admins = Admin::all();
         return response()->json([
-            'data' => $users
+            'data' => $admins
         ]);
-
     }
 
     /**
@@ -24,18 +24,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->validate([
-            'name' => ['required', 'string'],
-            'phone' => ['required', 'unique:users,phone', 'min:10', 'numeric'],
-            'password' => ['required', 'min:8', 'string'],
-            'is_team_leader' => ['boolean'],
-            'team_id' => ['required', 'exists:teams,id']
-        ]);
-        User::create($inputs);
-        return response()->json([
-            'data' => 'created'
-        ]);
-
+        //
     }
 
     /**

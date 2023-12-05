@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -23,12 +24,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+
         $inputs = $request->validate([
-            'name' => ['required', 'string'],
-            'status' => ['in:Not-Started, In-Progress,Completed,Canceled'],
-            'user_id' => ['exists:users,id'],
-            'team_id' => ['required', 'exists:teams,id']
-        ]
+                'name' => ['required', 'string'],
+                'status' => ['in:Not-Started, In-Progress,Completed,Canceled'],
+                'user_id' => ['exists:users,id'],
+                'team_id' => ['required', 'exists:teams,id']
+            ]
         );
         Task::create($inputs);
         return response()->json([

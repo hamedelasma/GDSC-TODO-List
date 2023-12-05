@@ -5,36 +5,19 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable implements JWTSubject
 {
-
     protected $fillable = [
-        'name',
-        'password',
-        'phone',
-        'is_team_leader',
-        'status',
-        'team_id'
-    ];
-
-    protected $casts = [
-        'password' => 'hashed'
+        'name', 'email', 'password'
     ];
 
     protected $hidden = [
         'password'
     ];
+    protected $casts = [
+        'password' => 'hashed'
+    ];
 
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
-    }
 
     public function getJWTIdentifier()
     {
@@ -50,5 +33,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
 }
