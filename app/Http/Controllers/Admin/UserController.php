@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return response()->json([
+            'data' => $user
+        ]);
     }
 
     /**
@@ -51,7 +55,18 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $inputs = $request->validate([
+            'name' => 'string',
+            'phone' => ['unique:users,phone', 'min:10', 'numeric'],
+            'password' => ['min:8', 'string'],
+            'is_team_leader' => ['boolean'],
+            'team_id' => ['exists:teams,id']
+        ]);
+        $user->update($inputs);
+        return response()->json([
+            'data' => 'updated'
+        ]);
     }
 
     /**
@@ -59,6 +74,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json([
+            'data' => 'deleted'
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+    use HasFactory;
     protected $fillable =[
         'name','code'
     ];
@@ -14,5 +15,10 @@ class Team extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

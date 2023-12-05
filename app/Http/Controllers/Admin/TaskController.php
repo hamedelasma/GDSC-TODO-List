@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::all()->load('team', 'user');
         return response()->json([
             'data' => $tasks
         ]);
@@ -24,11 +25,11 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->validate([
-            'name' => ['required', 'string'],
-            'status' => ['in:Not-Started, In-Progress,Completed,Canceled'],
-            'user_id' => ['exists:users,id'],
-            'team_id' => ['required', 'exists:teams,id']
-        ]
+                'name' => ['required', 'string'],
+                'status' => ['in:Not-Started, In-Progress,Completed,Canceled'],
+                'user_id' => ['exists:users,id'],
+                'team_id' => ['required', 'exists:teams,id']
+            ]
         );
         Task::create($inputs);
         return response()->json([
@@ -42,7 +43,7 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::findOrFail($id)->load('team', 'user');
         return response()->json([
             'data' => $task
         ]);

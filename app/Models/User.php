@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -32,6 +33,11 @@ class User extends Authenticatable implements JWTSubject
     public function team()
     {
         return $this->belongsTo(Team::class ,'team_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 
     public function getJWTIdentifier()
