@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -32,6 +34,14 @@ class TaskController extends Controller
                 'team_id' => ['required', 'exists:teams,id']
             ]
         );
+        if ($request->has('user_id')) {
+            $user = User::find($inputs['user_id']);
+            if ($user->team_id != $inputs['team_id']) {
+                return response()->json([
+                    'data' => 'This user does not belong to this team'
+                ], 401);
+            }
+        }
         Task::create($inputs);
         return response()->json([
             'data' => 'created'

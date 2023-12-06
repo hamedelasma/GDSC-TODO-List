@@ -28,4 +28,7 @@ Route::middleware('auth:api')->prefix('user')->group(function () {
     Route::get('tasks', [UserTaskController::class, 'index'])->name('task.index');
     Route::post('tasks', [UserTaskController::class, 'store'])->name('task.store');
     Route::put('tasks/{id}', [UserTaskController::class, 'update'])->name('task.update');
+    Route::get('tasks/team', [UserTaskController::class, 'teamTasks'])->name('task.tasks-team');
+    Route::put('tasks/{id}/assign', [UserTaskController::class, 'assignTask'])->name('task-assign');
+
 });
