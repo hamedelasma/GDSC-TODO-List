@@ -118,7 +118,7 @@ class TaskController extends Controller
         ]);
     }
 
-    private function checkIfIsTeamLeader()
+    public function checkIfIsTeamLeader()
     {
         return auth()->user()->is_team_leader;
     }

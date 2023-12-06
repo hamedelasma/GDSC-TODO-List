@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\TaskController as UserTaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,7 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::delete('team/{id}', [TeamController::class, 'destroy'])->name('team.delete');
     Route::apiResource('user', UserController::class);
     Route::apiResource('tasks', TaskController::class);
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
 
 
@@ -30,5 +33,5 @@ Route::middleware('auth:api')->prefix('user')->group(function () {
     Route::put('tasks/{id}', [UserTaskController::class, 'update'])->name('task.update');
     Route::get('tasks/team', [UserTaskController::class, 'teamTasks'])->name('task.tasks-team');
     Route::put('tasks/{id}/assign', [UserTaskController::class, 'assignTask'])->name('task-assign');
-
+    Route::get('dashboard', UserDashboardController::class)->name('dashboard');
 });
